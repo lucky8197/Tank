@@ -14,6 +14,7 @@ import java.awt.event.WindowEvent;
 @SuppressWarnings("all")
 public class TaskFrame extends Frame {
 	Tank myTank = new Tank(200, 200, Dir.DOWN);
+	Bullet b = new Bullet(300, 300, Dir.DOWN);
 
 	public TaskFrame() {
 		setVisible(true);
@@ -36,6 +37,7 @@ public class TaskFrame extends Frame {
 	// 调用前，先清理窗口。
 	public void paint(Graphics g) {
 		myTank.paint(g);
+		b.paint(g);
 
 	}
 
