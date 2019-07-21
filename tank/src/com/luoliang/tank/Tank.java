@@ -12,6 +12,7 @@ public class Tank {
 	private Dir dir = Dir.DOWN;
 	private static final int SPEED = 5;
 	private boolean moving;
+	private boolean live = true;
 
 	private TankFrame tf;
 
@@ -40,6 +41,9 @@ public class Tank {
 	}
 
 	public void paint(Graphics g) {
+		if (!live) {
+			tf.enemyTanks.remove(this);
+		}
 		Color c = g.getColor();
 		g.setColor(Color.YELLOW);
 		g.fillRect(x, y, 20, 20);

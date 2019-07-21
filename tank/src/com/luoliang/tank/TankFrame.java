@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -19,6 +20,7 @@ import java.util.List;
 public class TankFrame extends Frame {
 
 	Tank myTank = new Tank(200, 200, Dir.DOWN, this);
+	List<Tank> enemyTanks = new ArrayList<>();
 	List<Bullet> bullets = new ArrayList<>();
 	public static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 	Image offscreenImage = null;
@@ -37,6 +39,9 @@ public class TankFrame extends Frame {
 			}
 
 		});
+		for (int i = 0; i < 5; i++) {
+			enemyTanks.add(new Tank((i + 1) * 100, 300, Dir.DOWN, this));
+		}
 	}
 
 	@Override
@@ -66,6 +71,14 @@ public class TankFrame extends Frame {
 		for (int i = 0; i < bullets.size(); i++) {
 			bullets.get(i).paint(g);
 		}
+
+//		for (Bullet b : bullets) {   //不能这样删除
+//			b.paint(g);
+//		}
+		for (Iterator<Tank> it = enemyTanks.iterator(); it.hasNext();) {
+			it.next().paint(g);
+		}
+
 	}
 
 	class MyKeyListener extends KeyAdapter {
