@@ -1,5 +1,6 @@
 package com.luoliang.tank;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 /**
@@ -12,11 +13,14 @@ public class Tank {
 	private static final int SPEED = 5;
 	private boolean moving;
 
-	public Tank(int x, int y, Dir dir) {
+	private TankFrame tf;
+
+	public Tank(int x, int y, Dir dir, TankFrame tf) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
+		this.tf = tf;
 	}
 
 	public boolean isMoving() {
@@ -36,10 +40,16 @@ public class Tank {
 	}
 
 	public void paint(Graphics g) {
+		Color c = g.getColor();
+		g.setColor(Color.YELLOW);
 		g.fillRect(x, y, 50, 50);
+		g.setColor(c);
 		move();
 	}
 
+	/**
+	 * 移动
+	 */
 	public void move() {
 		if (!moving) {
 			return;
@@ -59,4 +69,13 @@ public class Tank {
 			break;
 		}
 	}
+
+	/**
+	 * 开火
+	 */
+	public void fire() {
+		tf.b = new Bullet(this.x, this.y, this.dir);
+
+	}
+
 }

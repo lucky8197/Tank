@@ -8,7 +8,7 @@ package com.luoliang.tank;
 public class Main {
 
 	public static void main(String[] args) throws InterruptedException {
-		TaskFrame tf = new TaskFrame();
+		TankFrame tf = new TankFrame();
 		while (true) {
 			Thread.sleep(50);
 			tf.repaint();

@@ -1,7 +1,9 @@
 package com.luoliang.tank;
 
+import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -12,14 +14,17 @@ import java.awt.event.WindowEvent;
  * @date 创建时间：2019年7月19日下午3:12:57
  */
 @SuppressWarnings("all")
-public class TaskFrame extends Frame {
-	Tank myTank = new Tank(200, 200, Dir.DOWN);
-	Bullet b = new Bullet(300, 300, Dir.DOWN);
+public class TankFrame extends Frame {
 
-	public TaskFrame() {
+	Tank myTank = new Tank(200, 200, Dir.DOWN, this);
+	Bullet b = null;
+	private static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
+	Image offscreenImage = null;
+
+	public TankFrame() {
 		setVisible(true);
 		setResizable(false);
-		setSize(800, 600);
+		setSize(GAME_WIDTH, GAME_HEIGHT);
 		setTitle("坦克大战");
 		addKeyListener(new MyKeyListener());
 		addWindowListener(new WindowAdapter() {
@@ -30,6 +35,20 @@ public class TaskFrame extends Frame {
 			}
 
 		});
+	}
+
+	@Override
+	// 双缓冲处理闪烁。会在调用paint的时候，先调用该方法。
+	public void update(Graphics g) {
+		if (offscreenImage == null) {
+			offscreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
+		}
+		Graphics gOffScreen = offscreenImage.getGraphics();
+		Color c = gOffScreen.getColor();
+		gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+		gOffScreen.setColor(c);
+		paint(gOffScreen);
+		g.drawImage(offscreenImage, 0, 0, null);
 	}
 
 	@Override
@@ -89,7 +108,9 @@ public class TaskFrame extends Frame {
 			case KeyEvent.VK_DOWN:
 				bD = false;
 				break;
-
+			case KeyEvent.VK_CONTROL:
+				myTank.fire();
+				break;
 			default:
 				break;
 			}

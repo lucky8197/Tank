@@ -7,6 +7,7 @@ import java.awt.Graphics;
  * @author luoliang
  * @date 创建时间：2019年7月19日下午9:56:10
  */
+@SuppressWarnings("all")
 public class Bullet {
 	private static final int SPEED = 10;
 	private static final int WIDTH = 10, HEIGHT = 10;
