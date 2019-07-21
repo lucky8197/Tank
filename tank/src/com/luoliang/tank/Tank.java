@@ -13,6 +13,7 @@ public class Tank {
 	private boolean moving = false;
 	public static final int WIDTH = ResourceMgr.tankL.getWidth(); // 坦克的大小
 	public static final int HEIGHT = ResourceMgr.tankL.getHeight();
+	private boolean living = true;
 
 	private TankFrame tf;
 
@@ -40,7 +41,26 @@ public class Tank {
 		this.dir = dir;
 	}
 
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
 	public void paint(Graphics g) {
+		if (!living) {
+			tf.tanks.remove(this);
+		}
 		switch (dir) {
 		case LEFT:
 			g.drawImage(ResourceMgr.tankL, x, y, null);
@@ -87,7 +107,6 @@ public class Tank {
 	public void fire() {
 		int bx = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
 		int by = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-
 		switch (dir) {
 		case LEFT:
 			tf.bullets.add(new Bullet(bx - 15, by + 3, this.dir, this.tf));
@@ -102,6 +121,10 @@ public class Tank {
 			tf.bullets.add(new Bullet(bx - 1, by + 15, this.dir, this.tf));
 			break;
 		}
+	}
+
+	public void die() {
+		this.living = false;
 	}
 
 }
