@@ -18,7 +18,7 @@ import java.util.List;
 @SuppressWarnings("all")
 public class TankFrame extends Frame {
 
-	Tank myTank = new Tank(200, 400, Dir.DOWN, this);
+	Tank myTank = new Tank(200, 400, Dir.DOWN, Group.GOOD, this);
 	List<Bullet> bullets = new ArrayList<>();
 	List<Tank> tanks = new ArrayList<>();
 	public static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
@@ -59,6 +59,9 @@ public class TankFrame extends Frame {
 	// 首次出现窗口时，或者窗口重显时(被最小化)自动调用
 	// 调用前，先清理窗口。
 	public void paint(Graphics g) {
+		if (!myTank.isLiving()) {
+			System.exit(0);
+		}
 		Color c = g.getColor();
 		g.setColor(Color.WHITE);
 		g.drawString("子弹的数量" + bullets.size(), 10, 60);
@@ -79,6 +82,7 @@ public class TankFrame extends Frame {
 			for (int j = 0; j < tanks.size(); j++) {
 				bullets.get(i).collideWith(tanks.get(j));
 			}
+			bullets.get(i).collideWith(myTank);
 		}
 
 //		for (Bullet b : bullets) {   //不能这样删除

@@ -1,6 +1,7 @@
 package com.luoliang.tank;
 
 import java.awt.Graphics;
+import java.util.Random;
 
 /**
  * @author luoliang
@@ -10,19 +11,22 @@ public class Tank {
 	private int x, y;
 	private Dir dir = Dir.DOWN;
 	private static final int SPEED = 5;
-	private boolean moving = false;
 	public static final int WIDTH = ResourceMgr.tankL.getWidth(); // 坦克的大小
 	public static final int HEIGHT = ResourceMgr.tankL.getHeight();
+	private boolean moving = true;
 	private boolean living = true;
+	private Random random = new Random();
+	private Group group = Group.BAD; // 分组
 
 	private TankFrame tf;
 
-	public Tank(int x, int y, Dir dir, TankFrame tf) {
+	public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
 		this.tf = tf;
+		this.group = group;
 	}
 
 	public boolean isMoving() {
@@ -55,6 +59,22 @@ public class Tank {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
+	}
+
+	public boolean isLiving() {
+		return living;
+	}
+
+	public void setLiving(boolean living) {
+		this.living = living;
 	}
 
 	public void paint(Graphics g) {
@@ -99,6 +119,9 @@ public class Tank {
 			y += SPEED;
 			break;
 		}
+		if (random.nextInt(10) > 8) {
+			this.fire();
+		}
 	}
 
 	/**
@@ -109,18 +132,19 @@ public class Tank {
 		int by = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
 		switch (dir) {
 		case LEFT:
-			tf.bullets.add(new Bullet(bx - 15, by + 3, this.dir, this.tf));
+			tf.bullets.add(new Bullet(bx - 15, by + 3, this.dir, this.getGroup(), this.tf));
 			break;
 		case UP:
-			tf.bullets.add(new Bullet(bx + 1, by - 15, this.dir, this.tf));
+			tf.bullets.add(new Bullet(bx + 1, by - 15, this.dir, this.getGroup(), this.tf));
 			break;
 		case RIGHT:
-			tf.bullets.add(new Bullet(bx + 15, by + 4, this.dir, this.tf));
+			tf.bullets.add(new Bullet(bx + 15, by + 4, this.dir, this.getGroup(), this.tf));
 			break;
 		case DOWN:
-			tf.bullets.add(new Bullet(bx - 1, by + 15, this.dir, this.tf));
+			tf.bullets.add(new Bullet(bx - 1, by + 15, this.dir, this.getGroup(), this.tf));
 			break;
 		}
+
 	}
 
 	public void die() {
