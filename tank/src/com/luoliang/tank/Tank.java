@@ -1,6 +1,5 @@
 package com.luoliang.tank;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 /**
@@ -12,7 +11,6 @@ public class Tank {
 	private Dir dir = Dir.DOWN;
 	private static final int SPEED = 5;
 	private boolean moving;
-	private boolean live = true;
 
 	private TankFrame tf;
 
@@ -41,13 +39,20 @@ public class Tank {
 	}
 
 	public void paint(Graphics g) {
-		if (!live) {
-			tf.enemyTanks.remove(this);
+		switch (dir) {
+		case LEFT:
+			g.drawImage(ResourceMgr.tankL, x, y, null);
+			break;
+		case UP:
+			g.drawImage(ResourceMgr.tankU, x, y, null);
+			break;
+		case RIGHT:
+			g.drawImage(ResourceMgr.tankR, x, y, null);
+			break;
+		case DOWN:
+			g.drawImage(ResourceMgr.tankD, x, y, null);
+			break;
 		}
-		Color c = g.getColor();
-		g.setColor(Color.YELLOW);
-		g.fillRect(x, y, 20, 20);
-		g.setColor(c);
 		move();
 	}
 
