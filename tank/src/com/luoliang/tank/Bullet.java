@@ -86,6 +86,7 @@ public class Bullet {
 		}
 		Rectangle rect1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
 		Rectangle rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
+		// 重叠
 		if (rect1.intersects(rect2)) {
 			tank.die();
 			this.die();

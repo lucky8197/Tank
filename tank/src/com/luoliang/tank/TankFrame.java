@@ -23,6 +23,7 @@ public class TankFrame extends Frame {
 	List<Tank> tanks = new ArrayList<>();
 	public static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 	Image offscreenImage = null;
+	Explode ex = new Explode(100, 100, this);
 
 	public TankFrame() {
 		setVisible(true);
@@ -84,6 +85,7 @@ public class TankFrame extends Frame {
 			}
 			bullets.get(i).collideWith(myTank);
 		}
+		ex.paint(g);
 
 //		for (Bullet b : bullets) {   //不能这样删除
 //			b.paint(g);
