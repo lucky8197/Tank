@@ -8,9 +8,10 @@ import java.util.Properties;
  * @date 创建时间：2019年7月22日下午2:54:30
  */
 public class PropertyMgr {
-	static Properties props = new Properties();
+	private Properties props;
 
-	static {
+	private PropertyMgr() {
+		props = new Properties();
 		try {
 			props.load(PropertyMgr.class.getClassLoader().getResourceAsStream("config"));
 		} catch (IOException e) {
@@ -18,16 +19,28 @@ public class PropertyMgr {
 		}
 	}
 
-	public static Object get(String key) {
+	private static class createClass {
+		private static final PropertyMgr propsMgr = new PropertyMgr();
+	}
+
+	public static PropertyMgr getPropertyMgr() {
+		return createClass.propsMgr;
+	}
+
+	public Integer getInt(String key) {
 		if (props == null) {
 			return null;
 		}
-		return props.get(key);
+		return Integer.parseInt((String) props.get(key));
 
 	}
 
-	public static void main(String[] args) {
-		System.out.println(PropertyMgr.get("initTankCount"));
+	public String getString(String key) {
+		if (props == null) {
+			return null;
+		}
+		return (String) props.get(key);
 
 	}
+
 }

@@ -1,1 +1,3 @@
 initTankCount=5
+tankSpeed = 8
+bulletSpeed=12
