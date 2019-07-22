@@ -1,6 +1,7 @@
 package com.luoliang.tank;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.Random;
 
 /**
@@ -21,6 +22,7 @@ public class Tank {
 	private Random random = new Random();
 	private Group group = Group.BAD; // 分组
 	boolean tankSwitch = true; // 切换坦克
+	Rectangle rect = new Rectangle();
 
 	private TankFrame tf;
 
@@ -31,6 +33,10 @@ public class Tank {
 		this.dir = dir;
 		this.tf = tf;
 		this.group = group;
+		rect.x = this.x;
+		rect.y = this.y;
+		rect.width = Tank.WIDTH;
+		rect.height = Tank.HEIGHT;
 	}
 
 	public boolean isMoving() {
@@ -149,6 +155,8 @@ public class Tank {
 			randomDir();
 		}
 		boundsCheck();
+		rect.x = this.x;
+		rect.y = this.y;
 	}
 
 	/**
