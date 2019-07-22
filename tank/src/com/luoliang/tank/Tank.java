@@ -88,28 +88,28 @@ public class Tank {
 		}
 		switch (dir) {
 		case LEFT:
-			if (tankSwitch) {
+			if (tankSwitch && group == Group.BAD) {
 				g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankL1 : ResourceMgr.badTankL1, x, y, null);
 			} else {
 				g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankL2 : ResourceMgr.badTankL2, x, y, null);
 			}
 			break;
 		case UP:
-			if (tankSwitch) {
+			if (tankSwitch && group == Group.BAD) {
 				g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankU1 : ResourceMgr.badTankU1, x, y, null);
 			} else {
 				g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankU2 : ResourceMgr.badTankU2, x, y, null);
 			}
 			break;
 		case RIGHT:
-			if (tankSwitch) {
+			if (tankSwitch && group == Group.BAD) {
 				g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankR1 : ResourceMgr.badTankR1, x, y, null);
 			} else {
 				g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankR2 : ResourceMgr.badTankR2, x, y, null);
 			}
 			break;
 		case DOWN:
-			if (tankSwitch) {
+			if (tankSwitch && group == Group.BAD) {
 				g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankD1 : ResourceMgr.badTankD1, x, y, null);
 			} else {
 				g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankD2 : ResourceMgr.badTankD2, x, y, null);
@@ -141,13 +141,14 @@ public class Tank {
 			y += SPEED;
 			break;
 		}
+		// 敌军开火。
 		if (this.group == Group.BAD && random.nextInt(100) > 95) {
 			this.fire();
 		}
-		if (this.group == Group.GOOD) {
-			return;
+		if (this.group == Group.BAD) {
+			randomDir();
 		}
-		randomDir();
+		boundsCheck();
 	}
 
 	/**
@@ -184,6 +185,24 @@ public class Tank {
 
 	public void die() {
 		this.living = false;
+	}
+
+	/**
+	 * 碰撞检测
+	 */
+	public void boundsCheck() {
+		if (this.x < 2) {
+			x = 2;
+		}
+		if (this.y < 32) {
+			y = 32;
+		}
+		if (this.x > TankFrame.GAME_WIDTH - WIDTH - 2) {
+			x = TankFrame.GAME_WIDTH - WIDTH - 2;
+		}
+		if (this.y > TankFrame.GAME_HEIGHT - HEIGHT) {
+			y = TankFrame.GAME_HEIGHT - HEIGHT - 2;
+		}
 	}
 
 }
