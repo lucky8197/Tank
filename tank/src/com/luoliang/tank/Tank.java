@@ -122,8 +122,21 @@ public class Tank {
 			y += SPEED;
 			break;
 		}
-		if (random.nextInt(100) > 95) {
+		if (this.group == Group.BAD && random.nextInt(100) > 95) {
 			this.fire();
+		}
+		if (this.group == Group.GOOD) {
+			return;
+		}
+		randomDir();
+	}
+
+	/**
+	 * 随机转向
+	 */
+	private void randomDir() {
+		if (random.nextInt(100) > 95) {
+			this.dir = Dir.values()[random.nextInt(4)];
 		}
 	}
 
