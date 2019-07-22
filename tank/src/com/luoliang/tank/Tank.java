@@ -13,13 +13,14 @@ import java.util.Random;
 public class Tank {
 	private int x, y;
 	private Dir dir = Dir.DOWN;
-	private static final int SPEED = 5;
-	public static final int WIDTH = ResourceMgr.goodTankL.getWidth(); // 坦克的大小
-	public static final int HEIGHT = ResourceMgr.goodTankL.getHeight();
+	private static final int SPEED = 8;
+	public static final int WIDTH = ResourceMgr.goodTankL1.getWidth(); // 坦克的大小
+	public static final int HEIGHT = ResourceMgr.goodTankL1.getHeight();
 	private boolean moving = true;
 	private boolean living = true;
 	private Random random = new Random();
 	private Group group = Group.BAD; // 分组
+	boolean tankSwitch = true; // 切换坦克
 
 	private TankFrame tf;
 
@@ -81,23 +82,41 @@ public class Tank {
 	}
 
 	public void paint(Graphics g) {
+
 		if (!living) {
 			tf.tanks.remove(this);
 		}
 		switch (dir) {
 		case LEFT:
-			g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
+			if (tankSwitch) {
+				g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankL1 : ResourceMgr.badTankL1, x, y, null);
+			} else {
+				g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankL2 : ResourceMgr.badTankL2, x, y, null);
+			}
 			break;
 		case UP:
-			g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y, null);
+			if (tankSwitch) {
+				g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankU1 : ResourceMgr.badTankU1, x, y, null);
+			} else {
+				g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankU2 : ResourceMgr.badTankU2, x, y, null);
+			}
 			break;
 		case RIGHT:
-			g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankR : ResourceMgr.badTankR, x, y, null);
+			if (tankSwitch) {
+				g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankR1 : ResourceMgr.badTankR1, x, y, null);
+			} else {
+				g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankR2 : ResourceMgr.badTankR2, x, y, null);
+			}
 			break;
 		case DOWN:
-			g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
+			if (tankSwitch) {
+				g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankD1 : ResourceMgr.badTankD1, x, y, null);
+			} else {
+				g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankD2 : ResourceMgr.badTankD2, x, y, null);
+			}
 			break;
 		}
+		tankSwitch = !tankSwitch;
 		move();
 	}
 
