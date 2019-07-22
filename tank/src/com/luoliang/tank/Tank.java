@@ -11,8 +11,8 @@ public class Tank {
 	private int x, y;
 	private Dir dir = Dir.DOWN;
 	private static final int SPEED = 5;
-	public static final int WIDTH = ResourceMgr.tankL.getWidth(); // 坦克的大小
-	public static final int HEIGHT = ResourceMgr.tankL.getHeight();
+	public static final int WIDTH = ResourceMgr.goodTankL.getWidth(); // 坦克的大小
+	public static final int HEIGHT = ResourceMgr.goodTankL.getHeight();
 	private boolean moving = true;
 	private boolean living = true;
 	private Random random = new Random();
@@ -83,16 +83,16 @@ public class Tank {
 		}
 		switch (dir) {
 		case LEFT:
-			g.drawImage(ResourceMgr.tankL, x, y, null);
+			g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
 			break;
 		case UP:
-			g.drawImage(ResourceMgr.tankU, x, y, null);
+			g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y, null);
 			break;
 		case RIGHT:
-			g.drawImage(ResourceMgr.tankR, x, y, null);
+			g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankR : ResourceMgr.badTankR, x, y, null);
 			break;
 		case DOWN:
-			g.drawImage(ResourceMgr.tankD, x, y, null);
+			g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
 			break;
 		}
 		move();
@@ -119,9 +119,9 @@ public class Tank {
 			y += SPEED;
 			break;
 		}
-		if (random.nextInt(10) > 8) {
-			this.fire();
-		}
+//		if (random.nextInt(10) > 8) {
+//			this.fire();
+//		}
 	}
 
 	/**
@@ -132,16 +132,16 @@ public class Tank {
 		int by = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
 		switch (dir) {
 		case LEFT:
-			tf.bullets.add(new Bullet(bx - 15, by + 3, this.dir, this.getGroup(), this.tf));
+			tf.bullets.add(new Bullet(bx - 15, by + 1, this.dir, this.getGroup(), this.tf));
 			break;
 		case UP:
-			tf.bullets.add(new Bullet(bx + 1, by - 15, this.dir, this.getGroup(), this.tf));
+			tf.bullets.add(new Bullet(bx, by - 15, this.dir, this.getGroup(), this.tf));
 			break;
 		case RIGHT:
-			tf.bullets.add(new Bullet(bx + 15, by + 4, this.dir, this.getGroup(), this.tf));
+			tf.bullets.add(new Bullet(bx + 15, by - 1, this.dir, this.getGroup(), this.tf));
 			break;
 		case DOWN:
-			tf.bullets.add(new Bullet(bx - 1, by + 15, this.dir, this.getGroup(), this.tf));
+			tf.bullets.add(new Bullet(bx, by + 15, this.dir, this.getGroup(), this.tf));
 			break;
 		}
 

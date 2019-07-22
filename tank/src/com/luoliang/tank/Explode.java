@@ -3,6 +3,8 @@ package com.luoliang.tank;
 import java.awt.Graphics;
 
 /**
+ * 爆炸效果
+ * 
  * @author luoliang
  * @date 创建时间：2019年7月21日下午5:03:14
  */
