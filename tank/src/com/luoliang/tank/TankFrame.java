@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 主游戏页面
+ * 
  * @author luoliang
  * @date 创建时间：2019年7月19日下午3:12:57
  */
@@ -21,9 +23,9 @@ public class TankFrame extends Frame {
 	Tank myTank = new Tank(200, 400, Dir.DOWN, Group.GOOD, this);
 	List<Bullet> bullets = new ArrayList<>();
 	List<Tank> tanks = new ArrayList<>();
+	List<Explode> explodes = new ArrayList<>();
 	public static final int GAME_WIDTH = 1080, GAME_HEIGHT = 960;
 	Image offscreenImage = null;
-	Explode ex = new Explode(100, 100, this);
 
 	public TankFrame() {
 		setVisible(true);
@@ -67,15 +69,26 @@ public class TankFrame extends Frame {
 		g.setColor(Color.WHITE);
 		g.drawString("子弹的数量" + bullets.size(), 10, 60);
 		g.drawString("敌人的数量" + tanks.size(), 10, 80);
+		g.drawString("爆炸的数量" + explodes.size(), 10, 100);
 		g.setColor(c);
 		myTank.paint(g);
+
 		// 不能用foreach（内部iterator），因为paint(g)方法需要删除。
 		for (int i = 0; i < bullets.size(); i++) {
 			bullets.get(i).paint(g);
 		}
+//		for (Bullet b : bullets) {   //不能这样删除
+//			b.paint(g);
+//		}
 
+		// 敌军坦克
 		for (int i = 0; i < tanks.size(); i++) {
 			tanks.get(i).paint(g);
+		}
+
+		// 爆炸
+		for (int i = 0; i < explodes.size(); i++) {
+			explodes.get(i).paint(g);
 		}
 
 		// 碰撞检测
@@ -83,13 +96,8 @@ public class TankFrame extends Frame {
 			for (int j = 0; j < tanks.size(); j++) {
 				bullets.get(i).collideWith(tanks.get(j));
 			}
-			bullets.get(i).collideWith(myTank);
+			bullets.get(i).collideWith(myTank); // 自己的坦克检测
 		}
-		ex.paint(g);
-
-//		for (Bullet b : bullets) {   //不能这样删除
-//			b.paint(g);
-//		}
 	}
 
 	class MyKeyListener extends KeyAdapter {

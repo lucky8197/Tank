@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 /**
+ * 子弹类
+ * 
  * @author luoliang
  * @date 创建时间：2019年7月19日下午9:56:10
  */
@@ -90,6 +92,7 @@ public class Bullet {
 		if (rect1.intersects(rect2)) {
 			tank.die();
 			this.die();
+			tf.explodes.add(new Explode(x, y, tf));
 		}
 	}
 }

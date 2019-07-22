@@ -4,6 +4,9 @@ import java.awt.Graphics;
 import java.util.Random;
 
 /**
+ * 
+ * 坦克类
+ * 
  * @author luoliang
  * @date 创建时间：2019年7月19日下午9:21:43
  */
@@ -119,9 +122,9 @@ public class Tank {
 			y += SPEED;
 			break;
 		}
-//		if (random.nextInt(10) > 8) {
-//			this.fire();
-//		}
+		if (random.nextInt(100) > 95) {
+			this.fire();
+		}
 	}
 
 	/**
